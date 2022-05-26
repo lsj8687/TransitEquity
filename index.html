@@ -15,6 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
 <script src="https://d3js.org/d3.v5.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
 
 <style>
 
@@ -35,6 +36,7 @@
         width: 100%;
         height: 100%;
         z-index: 0;
+        cursor: pointer;
     }
     #map_aft {
         position: absolute;
@@ -43,6 +45,7 @@
         right: 0px;
         width: 100%;
         z-index: 0;
+        cursor: pointer;
     }
     #navbar {
       position: absolute;
@@ -253,7 +256,7 @@
     <div class="session">
         <div class='session_demand'>
           <div class="session_title">
-            <p style="font-size: 21px; font-weight: 600;">Transit demand type</p>      
+            <p style="font-size: 21px; font-weight: 600;">Transit demand type</p>
           </div>
           <div class='row' id='demand'>
             <input id='dep' type='radio' name='toggle_dem' onclick="legend_dep()" value='dep' checked='checked'>
@@ -309,15 +312,15 @@
   // color
   const color_3class = ["#ffffff", "#8896bf", "#193583", "#89a08c", "#FFEAEA", "#8a85ad", "#1d4a22", "#8b8f7a", "#ffd8d8"]
   const color_3class_14 = {
-      'A1': color_3class[0], 
-      'A2': color_3class[1], 
-      'A3': color_3class[2], 
-      'B1': color_3class[3], 
-      'B2': color_3class[4], 
-      'B3': color_3class[5], 
-      'C1': color_3class[6], 
-      'C2': color_3class[7], 
-      'C3': color_3class[8], 
+      'A1': color_3class[0],
+      'A2': color_3class[1],
+      'A3': color_3class[2],
+      'B1': color_3class[3],
+      'B2': color_3class[4],
+      'B3': color_3class[5],
+      'C1': color_3class[6],
+      'C2': color_3class[7],
+      'C3': color_3class[8],
   };
   var clicked = 0
   console.log(clicked)
@@ -374,15 +377,17 @@
       .append("svg")
       .attr("width", "100%")
       .attr("height", "100%")
-      .style("position", "absolute")
+      .style('position', 'absolute')
       .style("z-index", 1);
-      
+
+  // $("svg").css({bottom: 0, left: 0});
+
   var margin = 80;
   var rect_width = 30;
   var legend_w = rect_width * 3;
   var legend_x = margin + legend_w/2; //the center for rotation
   var legend_y = window.innerHeight - margin - legend_w/2; //the center for rotation
-  
+
   // create bivariate color scheme
   var legend = svg.selectAll("#legend")
       .data(color_3class)
@@ -443,7 +448,7 @@
       .attr('y', line_end[1]+134)
       .attr('fill', 'white')
       .text('High');
-  
+
   var y_downbound = svg.append('text')
       .attr('x', line_start[0]+15)
       .attr('y', line_start[1]+2)
@@ -456,7 +461,7 @@
       .attr('fill', 'white')
       .text('High')
       .attr('transform', 'translate(0, 10) rotate(90,' + line_start[0] + ',' + line_start[1] + ')');
-  
+
   var y_line = svg.append('path')
       .attr('d', d3.line()([line_start, line_end]))
       .attr('stroke', 'white')
@@ -479,16 +484,16 @@
   let label_biv = ""
   let label_cho = ""
   let color_cho = ""
-  
+
   // print the specified color due to the clicked label
   for (let i = 1; i < 4; i++) {
-          legend['_groups']['0'][i-1]['__data__'] = 'A'+i;      
+          legend['_groups']['0'][i-1]['__data__'] = 'A'+i;
   }
   for (let i = 1; i < 4; i++) {
-          legend['_groups']['0'][i+2]['__data__'] = 'B'+i;      
+          legend['_groups']['0'][i+2]['__data__'] = 'B'+i;
   }
   for (let i = 1; i < 4; i++) {
-          legend['_groups']['0'][i+5]['__data__'] = 'C'+i;      
+          legend['_groups']['0'][i+5]['__data__'] = 'C'+i;
   }
 
   var rect_cho = legend.selectAll('rect')
@@ -517,9 +522,9 @@
   // map the base block group data
   map_bef.on('load', () => {
     // Add a custom vector tileset source
-  
+
   map_bef.addSource('biv_bef_0525_absvar', {type: 'vector', url: "mapbox://lsj97.biv_bef_0525_absvar"});
-  
+
   map_bef.addLayer(
   {
       'id': 'bef_base',
@@ -571,7 +576,22 @@
         }
       },
     );
-  
+
+  map_bef.addLayer(
+    {
+      'id': 'bef_hover',
+      'type': 'fill',
+      'source': 'biv_bef_0525_absvar',
+      'source-layer': 'biv_bef_0525_absvar',
+      'paint': {
+        'fill-outline-color': '#000000',
+        'fill-color': '#000000',
+        'fill-opacity': 0.5
+      },
+      'filter': ['in', 'o', ]
+    },
+  );
+
   document.getElementById('demand').addEventListener('change', (event) => {
       const demand_target = event.target.value;
 
@@ -659,7 +679,7 @@
   console.log(clicked)
 
   if ((clicked % 2) === 1) {
-    
+
     map_bef.setPaintProperty(
     'bef_over',
     'fill-color', [
@@ -702,8 +722,28 @@
   }
 
   clicked = clicked + 1
-  
-});
+
+  });
+
+
+  map_bef.on('mousemove', 'bef_base', (e) => {
+    map_bef.getCanvas().style.cursor = 'pointer';
+
+    map_bef.setFilter('bef_hover', ['in', 'o', e.features[0].properties['o']]);
+    map_aft.setFilter('aft_hover', ['in', 'o', e.features[0].properties['o']]);
+
+    console.log(e.features[0].properties)
+  });
+
+  map_bef.on('mouseleave', 'bef_base', (e) => {
+    map_bef.getCanvas().style.cursor = '';
+
+    map_bef.setFilter('bef_hover', ['in', 'o', ]);
+    map_aft.setFilter('aft_hover', ['in', 'o', ]);
+
+  });
+
+
 
   map_bef.on('click', 'bef_base', (es) => {
     label_cho = label
@@ -723,7 +763,7 @@
                   color_cho, color_3class_14[color_cho],
                   'black'
           ]
-      )    
+      )
     }
 
     console.log(clicked)
@@ -872,7 +912,7 @@
       },
     );
 
-    
+
   map_aft.addLayer(
     {
       'id': 'aft_over',
@@ -898,6 +938,21 @@
         }
       },
     );
+
+  map_aft.addLayer(
+    {
+      'id': 'aft_hover',
+      'type': 'fill',
+      'source': 'biv_aft_0525_absvar',
+      'source-layer': 'biv_aft_0525_absvar',
+      'paint': {
+        'fill-outline-color': '#000000',
+        'fill-color': '#000000',
+        'fill-opacity': 0.5
+      },
+      'filter': ['in', 'o', ]
+    },
+  );
 
   document.getElementById('demand').addEventListener('change', (event) => {
     const demand_target = event.target.value;
@@ -946,7 +1001,7 @@
     time_filter = a.target.value;
 
     label = demand_filter + '_' + time_filter;
-  
+
     map_aft.setPaintProperty(
       'aft_base',
       'fill-color', [
@@ -980,7 +1035,24 @@
               ]
       );
   });
-  
+
+  map_aft.on('mousemove', 'aft_base', (e) => {
+    map_aft.getCanvas().style.cursor = 'pointer';
+
+    map_bef.setFilter('bef_hover', ['in', 'o', e.features[0].properties['o']]);
+    map_aft.setFilter('aft_hover', ['in', 'o', e.features[0].properties['o']]);
+
+    console.log(e.features[0].properties)
+  });
+
+  map_aft.on('mouseleave', 'aft_base', (e) => {
+    map_aft.getCanvas().style.cursor = '';
+
+    map_bef.setFilter('bef_hover', ['in', 'o', ]);
+    map_aft.setFilter('aft_hover', ['in', 'o', ]);
+
+  });
+
   map_aft.on('click', 'aft_base', (er) => {
     label_cho = label
     color_cho = er.features['0']['properties'][label]
@@ -999,7 +1071,7 @@
                   color_cho, color_3class_14[color_cho],
                   'black'
           ]
-      )    
+      )
     }
 
     console.log(clicked)
@@ -1115,7 +1187,7 @@
   })
 
   });
-  
+
   legend.on("click", function(d) {
       label_biv = d
       map_bef.setPaintProperty(
@@ -1206,7 +1278,7 @@
     }),
     'bottom-right'
   );
-  
+
 
   function coordinate() {
 
@@ -1259,7 +1331,7 @@
       .text('High');
   };
 
-  function legend_min() {   
+  function legend_min() {
   legend_y_text
       .text('Minority')
       .attr('x', line_start[0]-40);
@@ -1283,7 +1355,7 @@
       .text('Low');
   };
 
-  
+
 </script>
 
 </body>
