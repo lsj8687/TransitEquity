@@ -42,7 +42,7 @@
         bottom: 0px;
         right: 0px;
         width: 100%;
-        z-index: 0
+        z-index: 0;
     }
     #navbar {
       position: absolute;
@@ -319,7 +319,9 @@
       'C2': color_3class[7], 
       'C3': color_3class[8], 
   };
-  
+  var clicked = 0
+  console.log(clicked)
+
   // var map_bef_canvas = d3.select('map_bef')
   //   .attr('width', (window.innerWidth - 1)/2)
   //   .attr('height', window.innerHeight);
@@ -490,6 +492,7 @@
   }
 
   var rect_cho = legend.selectAll('rect')
+  var rect_cho_clicked = legend.selectAll('rect')
 
   rect_elements = rect_cho.nodes();
 
@@ -504,7 +507,13 @@
       d3.select(this)
         .style('stroke', 'none');
     })
-
+  rect_cho_clicked
+    .on('click', function() {
+      d3.select(this)
+        .style('stroke', 'black')
+        .style('stroke-width', '3px')
+        .style('stroke-linecap', 'round');
+  })
   // map the base block group data
   map_bef.on('load', () => {
     // Add a custom vector tileset source
@@ -645,11 +654,63 @@
       );
   });
 
+  d3.select('body').on('click', function(){
+
+  console.log(clicked)
+
+  if ((clicked % 2) === 1) {
+    
+    map_bef.setPaintProperty(
+    'bef_over',
+    'fill-color', [
+        "match", ["get", label],
+                'A1', color_3class_14['A1'],
+                'A2', color_3class_14['A2'],
+                'A3', color_3class_14['A3'],
+                'B1', color_3class_14['B1'],
+                'B2', color_3class_14['B2'],
+                'B3', color_3class_14['B3'],
+                'C1', color_3class_14['C1'],
+                'C2', color_3class_14['C2'],
+                'C3', color_3class_14['C3'],
+                'black'
+            ]
+    );
+    map_aft.setPaintProperty(
+    'aft_over',
+    'fill-color', [
+        "match", ["get", label],
+                'A1', color_3class_14['A1'],
+                'A2', color_3class_14['A2'],
+                'A3', color_3class_14['A3'],
+                'B1', color_3class_14['B1'],
+                'B2', color_3class_14['B2'],
+                'B3', color_3class_14['B3'],
+                'C1', color_3class_14['C1'],
+                'C2', color_3class_14['C2'],
+                'C3', color_3class_14['C3'],
+                'black'
+            ]
+    );
+
+    rect_cho
+    .style('stroke', 'none');
+
+    rect_cho_clicked
+    .style('stroke', 'none');
+
+  }
+
+  clicked = clicked + 1
+  
+});
+
   map_bef.on('click', 'bef_base', (es) => {
     label_cho = label
     color_cho = es.features['0']['properties'][label]
 
-    map_bef.setPaintProperty(
+    if ((clicked % 2) === 0) {
+      map_bef.setPaintProperty(
           'bef_over',
           'fill-color', ["match",["get", label_cho],
                   color_cho, color_3class_14[color_cho],
@@ -662,7 +723,10 @@
                   color_cho, color_3class_14[color_cho],
                   'black'
           ]
-      )
+      )    
+    }
+
+    console.log(clicked)
 
     if (color_cho === (rect_cho['_parents']['8']['__data__'])) {
       d3.select(rect_elements[8])
@@ -921,7 +985,8 @@
     label_cho = label
     color_cho = er.features['0']['properties'][label]
 
-    map_bef.setPaintProperty(
+    if ((clicked % 2) === 0) {
+      map_bef.setPaintProperty(
           'bef_over',
           'fill-color', ["match",["get", label_cho],
                   color_cho, color_3class_14[color_cho],
@@ -934,8 +999,10 @@
                   color_cho, color_3class_14[color_cho],
                   'black'
           ]
-      )
+      )    
+    }
 
+    console.log(clicked)
     if (color_cho === (rect_cho['_parents']['8']['__data__'])) {
       d3.select(rect_elements[8])
         .style('stroke', 'black')
@@ -1140,11 +1207,6 @@
     'bottom-right'
   );
   
-
-  // d3.select('map').on('click', function(){
-  //           try{map_bef.removeLayer('bef_over')} catch(err) {}
-  //           try{map_aft.removeLayer('aft_over')} catch(err) {}
-  // });
 
   function coordinate() {
 
