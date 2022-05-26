@@ -320,6 +320,16 @@
       'C3': color_3class[8], 
   };
   
+  // var map_bef_canvas = d3.select('map_bef')
+  //   .attr('width', (window.innerWidth - 1)/2)
+  //   .attr('height', window.innerHeight);
+  // var map_aft_canvas = d3.select('map_aft')
+  //   .attr('width', (window.innerWidth - 1)/2)
+  //   .attr('height', window.innerHeight);
+  // d3.select('map')
+  //   .attr('width', window.innerWidth)
+  //   .attr('height', window.innerHeight);
+
   window.onresize = function () {
       setWindowSize();
   }
@@ -337,7 +347,7 @@
   sliderValue.innerHTML = 45;
 
 // Create the map with token !토큰이 달라지면 폴리곤 및 다른 정보가 사라짐
-  mapboxgl.accessToken = 'pk.eyJ1IjoibHNqOTciLCJhIjoiY2wzMGNmZjFkMTltYTNpcDhheTJkZnYxNiJ9.Ub65O1NG1yKYqC1ApgCJvw';
+  mapboxgl.accessToken = 'pk.eyJ1IjoidWh3YW5nMyIsImEiOiJja3d0bGh4cG8wemxtMm5xcTJ1anc4ajlxIn0.GPUcPfwoUXy6pItqRUvifw';
 
   const map_bef = new mapboxgl.Map({
       container: 'map_bef', // container ID // style URL //dark-v10 // style URL //dark-v10
@@ -488,27 +498,25 @@
       d3.select(this)
         .style('stroke', 'black')
         .style('stroke-width', '3px')
-        .style('stroke-linecap', 'round')
-        .style('opacity', 0.7);
+        .style('stroke-linecap', 'round');
   })
     .on('mouseout', function() {
       d3.select(this)
-        .style('stroke', 'none')
-        .style('opacity', 1);
+        .style('stroke', 'none');
     })
 
   // map the base block group data
   map_bef.on('load', () => {
     // Add a custom vector tileset source
   
-  map_bef.addSource('biv_bef_0513_absvar', {type: 'vector', url: "mapbox://lsj97.biv_bef_0513_absvar"});
+  map_bef.addSource('biv_bef_0525_absvar', {type: 'vector', url: "mapbox://lsj97.biv_bef_0525_absvar"});
   
   map_bef.addLayer(
   {
       'id': 'bef_base',
       'type': 'fill',
-      'source': 'biv_bef_0513_absvar',
-      'source-layer': 'biv_bef_0513_absvar',
+      'source': 'biv_bef_0525_absvar',
+      'source-layer': 'biv_bef_0525_absvar',
       'paint': {
       'fill-color': [
           'match', ['get', label],
@@ -533,8 +541,8 @@
   {
       'id': 'bef_over',
       'type': 'fill',
-      'source': 'biv_bef_0513_absvar',
-      'source-layer': 'biv_bef_0513_absvar',
+      'source': 'biv_bef_0525_absvar',
+      'source-layer': 'biv_bef_0525_absvar',
       'paint': {
       'fill-color': [
           'match', ['get', label],
@@ -659,135 +667,110 @@
     if (color_cho === (rect_cho['_parents']['8']['__data__'])) {
       d3.select(rect_elements[8])
         .style('stroke', 'black')
-        .style('stroke-width', '3px')
-        .style('opacity', 0.7);
+        .style('stroke-width', '3px');
       for (let i = 0; i < 8; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
     }
     else if (color_cho === (rect_cho['_parents']['7']['__data__'])) {
       d3.select(rect_elements[7])
         .style('stroke', 'black')
-        .style('stroke-width', '3px')
-        .style('opacity', 0.7);
+        .style('stroke-width', '3px');
       for (let i = 0; i < 7; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
       for (let i = 8; i < 9; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
     }
     else if (color_cho === (rect_cho['_parents']['6']['__data__'])) {
       d3.select(rect_elements[6])
         .style('stroke', 'black')
-        .style('stroke-width', '3px')
-        .style('opacity', 0.7);
+        .style('stroke-width', '3px');
       for (let i = 0; i < 6; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
       for (let i = 7; i < 9; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
     }
     else if (color_cho === (rect_cho['_parents']['5']['__data__'])) {
       d3.select(rect_elements[5])
         .style('stroke', 'black')
-        .style('stroke-width', '3px')
-        .style('opacity', 0.7);
+        .style('stroke-width', '3px');
       for (let i = 0; i < 5; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
       for (let i = 6; i < 9; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
     }
     else if (color_cho === (rect_cho['_parents']['4']['__data__'])) {
       d3.select(rect_elements[4])
         .style('stroke', 'black')
-        .style('stroke-width', '3px')
-        .style('opacity', 0.7);
+        .style('stroke-width', '3px');
       for (let i = 0; i < 4; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
       for (let i = 5; i < 9; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
     }
     else if (color_cho === (rect_cho['_parents']['3']['__data__'])) {
       d3.select(rect_elements[3])
         .style('stroke', 'black')
-        .style('stroke-width', '3px')
-        .style('opacity', 0.7);
+        .style('stroke-width', '3px');
       for (let i = 0; i < 3; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
       for (let i = 4; i < 9; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
     }
     else if (color_cho === (rect_cho['_parents']['2']['__data__'])) {
       d3.select(rect_elements[2])
         .style('stroke', 'black')
-        .style('stroke-width', '3px')
-        .style('opacity', 0.7);
+        .style('stroke-width', '3px');
       for (let i = 0; i < 2; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
       for (let i = 3; i < 9; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
     }
     else if (color_cho === (rect_cho['_parents']['1']['__data__'])) {
       d3.select(rect_elements[1])
         .style('stroke', 'black')
-        .style('stroke-width', '3px')
-        .style('opacity', 0.7);
+        .style('stroke-width', '3px');
       for (let i = 0; i < 1; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
       for (let i = 2; i < 9; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
     }
     else if (color_cho === (rect_cho['_parents']['0']['__data__'])) {
       d3.select(rect_elements[0])
         .style('stroke', 'black')
-        .style('stroke-width', '3px')
-        .style('opacity', 0.7);
+        .style('stroke-width', '3px');
       for (let i = 1; i < 9; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
     }
   });
@@ -797,14 +780,14 @@
       // map the base block group data
   map_aft.on('load', () => {
     // Add a custom vector tileset source
-    map_aft.addSource('biv_aft_0510_absvar', {type: 'vector', url: "mapbox://lsj97.biv_aft_0510_absvar"});
+    map_aft.addSource('biv_aft_0525_absvar', {type: 'vector', url: "mapbox://lsj97.biv_aft_0525_absvar"});
 
     map_aft.addLayer(
       {
         'id': 'aft_base',
         'type': 'fill',
-        'source': 'biv_aft_0510_absvar',
-        'source-layer': 'biv_aft_0510_absvar',
+        'source': 'biv_aft_0525_absvar',
+        'source-layer': 'biv_aft_0525_absvar',
         'paint': {
           'fill-color': [
               'match', ['get', label],
@@ -830,8 +813,8 @@
     {
       'id': 'aft_over',
       'type': 'fill',
-      'source': 'biv_aft_0510_absvar',
-      'source-layer': 'biv_aft_0510_absvar',
+      'source': 'biv_aft_0525_absvar',
+      'source-layer': 'biv_aft_0525_absvar',
       'paint': {
       'fill-color': [
           'match', ['get', label],
@@ -933,25 +916,6 @@
               ]
       );
   });
-
-  // legend.on("click", function(d) {
-  //     label_biv = d
-  //     map_bef.setPaintProperty(
-  //         'bef_over',
-  //         'fill-color', ["match",["get", label],
-  //                 label_biv, color_3class_14[label_biv],
-  //                 'black'
-  //         ]
-  //     )
-  //     map_aft.setPaintProperty(
-  //         'aft_over',
-  //         'fill-color', ["match",["get", label],
-  //                 label_biv, color_3class_14[label_biv],
-  //                 'black'
-  //         ]
-  //     )
-
-  // });
   
   map_aft.on('click', 'aft_base', (er) => {
     label_cho = label
@@ -975,135 +939,110 @@
     if (color_cho === (rect_cho['_parents']['8']['__data__'])) {
       d3.select(rect_elements[8])
         .style('stroke', 'black')
-        .style('stroke-width', '3px')
-        .style('opacity', 0.7);
+        .style('stroke-width', '3px');
       for (let i = 0; i < 8; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
     }
     else if (color_cho === (rect_cho['_parents']['7']['__data__'])) {
       d3.select(rect_elements[7])
         .style('stroke', 'black')
-        .style('stroke-width', '3px')
-        .style('opacity', 0.7);
+        .style('stroke-width', '3px');
       for (let i = 0; i < 7; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
       for (let i = 8; i < 9; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
     }
     else if (color_cho === (rect_cho['_parents']['6']['__data__'])) {
       d3.select(rect_elements[6])
         .style('stroke', 'black')
-        .style('stroke-width', '3px')
-        .style('opacity', 0.7);
+        .style('stroke-width', '3px');
       for (let i = 0; i < 6; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
       for (let i = 7; i < 9; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
     }
     else if (color_cho === (rect_cho['_parents']['5']['__data__'])) {
       d3.select(rect_elements[5])
         .style('stroke', 'black')
-        .style('stroke-width', '3px')
-        .style('opacity', 0.7);
+        .style('stroke-width', '3px');
       for (let i = 0; i < 5; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
       for (let i = 6; i < 9; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
     }
     else if (color_cho === (rect_cho['_parents']['4']['__data__'])) {
       d3.select(rect_elements[4])
         .style('stroke', 'black')
-        .style('stroke-width', '3px')
-        .style('opacity', 0.7);
+        .style('stroke-width', '3px');
       for (let i = 0; i < 4; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
       for (let i = 5; i < 9; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
     }
     else if (color_cho === (rect_cho['_parents']['3']['__data__'])) {
       d3.select(rect_elements[3])
         .style('stroke', 'black')
-        .style('stroke-width', '3px')
-        .style('opacity', 0.7);
+        .style('stroke-width', '3px');
       for (let i = 0; i < 3; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
       for (let i = 4; i < 9; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
     }
     else if (color_cho === (rect_cho['_parents']['2']['__data__'])) {
       d3.select(rect_elements[2])
         .style('stroke', 'black')
-        .style('stroke-width', '3px')
-        .style('opacity', 0.7);
+        .style('stroke-width', '3px');
       for (let i = 0; i < 2; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
       for (let i = 3; i < 9; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
     }
     else if (color_cho === (rect_cho['_parents']['1']['__data__'])) {
       d3.select(rect_elements[1])
         .style('stroke', 'black')
-        .style('stroke-width', '3px')
-        .style('opacity', 0.7);
+        .style('stroke-width', '3px');
       for (let i = 0; i < 1; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
       for (let i = 2; i < 9; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
     }
     else if (color_cho === (rect_cho['_parents']['0']['__data__'])) {
       d3.select(rect_elements[0])
         .style('stroke', 'black')
-        .style('stroke-width', '3px')
-        .style('opacity', 0.7);
+        .style('stroke-width', '3px');
       for (let i = 1; i < 9; i++) {
         d3.select(rect_elements[i])
-          .style('stroke', 'none')
-          .style('opacity', 1);
+          .style('stroke', 'none');
       }
     }
   })
@@ -1126,10 +1065,86 @@
                   'black'
           ]
       )
-
-    console.log(label)
-    console.log(label_biv)
   });
+
+    // add additional maps (atlanta boundary & main road)
+  map_bef.on('load', () => {
+  map_bef.addSource('atl_boundary',  {type: 'vector', url: "mapbox://uhwang3.atl_boundary" });
+
+  map_bef.addSource('main_road_3counties',  {type: 'vector', url: "mapbox://uhwang3.cl0q27y7p3mcw20qgismthmry-4a3tz" });
+
+  map_bef.addLayer(
+    {
+      'id': 'main_road_3counties',
+      'type': 'line',
+      'source': 'main_road_3counties',
+      'source-layer': 'main_road_3counties',
+      'paint': {
+        'line-color': 'rgba(20,20,20,0.7)',
+        'line-width': 1.5
+        }
+      },
+    );
+
+    map_bef.addLayer(
+      {
+        'id': 'atl_boundary',
+        'type': 'fill',
+        'source': 'atl_boundary',
+        'source-layer': 'atl_boundary',
+        'paint': {
+          'fill-color':'rgba(0,0,0,0)',
+          'fill-outline-color': 'rgba(200,200,200,0.5)'
+        }
+      },
+    );
+  })
+
+  map_aft.on('load', () => {
+  map_aft.addSource('atl_boundary',  {type: 'vector', url: "mapbox://uhwang3.atl_boundary" });
+
+  map_aft.addSource('main_road_3counties',  {type: 'vector', url: "mapbox://uhwang3.cl0q27y7p3mcw20qgismthmry-4a3tz" });
+
+  map_aft.addLayer(
+    {
+      'id': 'main_road_3counties',
+      'type': 'line',
+      'source': 'main_road_3counties',
+      'source-layer': 'main_road_3counties',
+      'paint': {
+        'line-color': 'rgba(20,20,20,0.7)',
+        'line-width': 1.5
+        }
+      },
+    );
+
+    map_aft.addLayer(
+      {
+        'id': 'atl_boundary',
+        'type': 'fill',
+        'source': 'atl_boundary',
+        'source-layer': 'atl_boundary',
+        'paint': {
+          'fill-color':'rgba(0,0,0,0)',
+          'fill-outline-color': 'rgba(200,200,200,0.5)'
+        }
+      },
+    );
+  })
+
+  map_aft.addControl(
+    new MapboxGeocoder({
+      accessToken: mapboxgl.accessToken,
+      mapboxgl: mapboxgl,
+    }),
+    'bottom-right'
+  );
+  
+
+  // d3.select('map').on('click', function(){
+  //           try{map_bef.removeLayer('bef_over')} catch(err) {}
+  //           try{map_aft.removeLayer('aft_over')} catch(err) {}
+  // });
 
   function coordinate() {
 
@@ -1166,7 +1181,7 @@
       disable = false;
     }
   })
-  }
+ }
 
   coordinate();
 
